@@ -36,21 +36,39 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',   
+    #3rd party apps
     'rest_framework',
+    'rest_framework.authtoken',
+    # 'rest_framework_swagger',
+    'rest_auth',
+    'drf_yasg',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth.registration',
     'posts.apps.PostsConfig',#blog app configuration 
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # new
+#Email backend is needed for confirmation of of account during setup
+
+SITE_ID = 1 # new
 # new
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES':[
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication' #technically nothing has changed. We have made the default settings explicit
-    ] 
+        'rest_framework.authentication.SessionAuthentication', #this is present since we need it for our browsable api
+        # 'rest_framework.authentication.BasicAuthentication'   #technically nothing has changed. We have made the default settings explicit
+        'rest_framework.authentication.TokenAuthentication', # new
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' 
 }
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
